@@ -65,7 +65,10 @@ class LoadFile(object):
         """
 
         # Reset object for new document
-        self.__init__()
+        if self.semeval_model:
+            self.__init__(semeval_model=self.semeval_model)
+        else:
+            self.__init__()
 
         # get the language parameter
         if language is None:
