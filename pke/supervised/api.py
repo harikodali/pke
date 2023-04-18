@@ -22,12 +22,6 @@ class SupervisedLoadFile(LoadFile):
         super(SupervisedLoadFile, self).__init__()
 
         self.instances = {}
-        instance = self.__class__.__name__
-        model = os.path.join(self._models, instance + "-semeval2010.py3.pickle")
-        print("semeval model loading start")
-        start = time()
-        self.clf = load_model(model)
-        print("semeval model loading complete in {} seconds".format(time()-start))
         """ The instances container. """
 
     def feature_scaling(self):
@@ -56,7 +50,7 @@ class SupervisedLoadFile(LoadFile):
         X = [self.instances[u] for u in candidates]
 
         # classify candidates
-        y = self.clf.predict_proba(X)
+        y = model.predict_proba(X)
 
         for i, candidate in enumerate(candidates):
             self.weights[candidate] = y[i][1]

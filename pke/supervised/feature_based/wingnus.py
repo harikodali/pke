@@ -53,9 +53,9 @@ class WINGNUS(SupervisedLoadFile):
 
     """
 
-    def __init__(self):
+    def __init__(self, semeval_model=None):
         """Redefining initializer for WINGNUS."""
-        print("wignus init from wingnus.py")
+        self.semeval_model = semeval_model
         super(WINGNUS, self).__init__()
 
     def candidate_selection(self, grammar=None):
@@ -240,7 +240,7 @@ class WINGNUS(SupervisedLoadFile):
             return
 
         self.feature_extraction(df=df)
-        self.classify_candidates(model=model_file)
+        self.classify_candidates(model=self.semeval_model)
 
     @staticmethod
     def train(training_instances, training_classes, model_file):
