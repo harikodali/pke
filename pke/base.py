@@ -81,7 +81,7 @@ class LoadFile(object):
 
 
     def load_document(self, input, language=None, stoplist=None,
-                      normalization='stemming', spacy_model=self.spacy_model):
+                      normalization='stemming', spacy_model=None):
         """Loads the content of a document/string/stream in a given language.
 
         Args:
@@ -127,7 +127,7 @@ class LoadFile(object):
         # check whether input is a string
         elif isinstance(input, str):
             parser = RawTextReader(language=self.language)
-            sents = parser.read(text=input, spacy_model=spacy_model)
+            sents = parser.read(text=input, spacy_model=self.spacy_model)
         # check whether input is processed text
         elif isinstance(input, list) and all(isinstance(item, list) for item in input):
             parser = PreprocessedReader()
