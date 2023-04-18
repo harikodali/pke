@@ -16,14 +16,18 @@ from string import punctuation
 import os
 import logging
 import spacy
-
+from time import time
 
 class LoadFile(object):
     """The LoadFile class that provides base functions."""
 
     def __init__(self):
         """Initializer for LoadFile class."""
-
+        installed_models = [m for m in spacy.util.get_installed_models() if m[:2] == 'en']
+        print("spacy model loading in init")
+        start = time()
+        self.spacy_model = spacy.load(installed_models[0], disable=['ner', 'textcat', 'parser'])
+        print("spacy model loaded in {:.2f} seconds".format(time() - start))
         self.language = None
         """Language of the input file."""
 
@@ -48,8 +52,36 @@ class LoadFile(object):
         self.stoplist = None
         """List of stopwords."""
 
+
+    def reset(self):
+        """Initializer for LoadFile class."""
+        self.language = None
+        """Language of the input file."""
+
+        self.normalization = None
+        """Word normalization method."""
+
+        self.sentences = []
+        """Sentence container (list of Sentence objects)."""
+
+        self.candidates = defaultdict(Candidate)
+        """Keyphrase candidates container (dict of Candidate objects)."""
+
+        self.weights = {}
+        """Weight container (can be either word or candidate weights)."""
+
+        self._models = os.path.join(os.path.dirname(__file__), 'models')
+        """Root path of the models."""
+
+        self._df_counts = os.path.join(self._models, "df-semeval2010.tsv.gz")
+        """Path to the document frequency counts provided in pke."""
+
+        self.stoplist = None
+        """List of stopwords."""
+
+
     def load_document(self, input, language=None, stoplist=None,
-                      normalization='stemming', spacy_model=None):
+                      normalization='stemming', spacy_model=self.spacy_model):
         """Loads the content of a document/string/stream in a given language.
 
         Args:
@@ -65,7 +97,7 @@ class LoadFile(object):
         """
 
         # Reset object for new document
-        self.__init__()
+        self.reset()
 
         # get the language parameter
         if language is None:

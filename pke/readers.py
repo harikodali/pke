@@ -98,7 +98,7 @@ class RawTextReader(Reader):
                 raise Exception(excp_msg)
 
             # add the sentence splitter
-            nlp.add_pipe('sentencizer')
+        nlp.add_pipe('sentencizer')
 
         # Fix for non splitting words with hyphens with spacy taken from
         # https://spacy.io/usage/linguistic-features#native-tokenizer-additions
