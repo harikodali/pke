@@ -22,6 +22,9 @@ class SupervisedLoadFile(LoadFile):
         super(SupervisedLoadFile, self).__init__()
 
         self.instances = {}
+        instance = self.__class__.__name__
+        model = os.path.join(self._models, instance + "-semeval2010.py3.pickle")
+        self.clf = load_model(model)
         """ The instances container. """
 
     def feature_scaling(self):
@@ -45,22 +48,12 @@ class SupervisedLoadFile(LoadFile):
                     default to None.
         """
 
-        # set the default model if none provided
-        if model is None:
-            instance = self.__class__.__name__
-            model = os.path.join(self._models, instance + "-semeval2010.py3.pickle")
-
-        # load the model
-        clf = load_model(model)
-        # with open(model, 'rb') as f:
-        #     clf = pickle.load(f)
-
         # get matrix of instances
         candidates = self.instances.keys()
         X = [self.instances[u] for u in candidates]
 
         # classify candidates
-        y = clf.predict_proba(X)
+        y = self.clf.predict_proba(X)
 
         for i, candidate in enumerate(candidates):
             self.weights[candidate] = y[i][1]
