@@ -24,7 +24,9 @@ class SupervisedLoadFile(LoadFile):
         self.instances = {}
         instance = self.__class__.__name__
         model = os.path.join(self._models, instance + "-semeval2010.py3.pickle")
+        print("model loading start")
         self.clf = load_model(model)
+        print("model loading complete")
         """ The instances container. """
 
     def feature_scaling(self):

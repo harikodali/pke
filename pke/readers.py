@@ -5,6 +5,8 @@
 
 import logging
 import spacy
+from time import time
+
 
 from pke.data_structures import Sentence
 
@@ -82,7 +84,9 @@ class RawTextReader(Reader):
 
             # select first model for the language
             if len(installed_models):
+                start = time()
                 nlp = spacy.load(installed_models[0], disable=['ner', 'textcat', 'parser'])
+                print("spacy model loaded in {:.2f} seconds".format(time() - start))
 
             # stop execution is no model is available
             else:
