@@ -27,6 +27,7 @@ class LoadFile(object):
         print("spacy model loading in init")
         start = time()
         self.spacy_model = spacy.load(installed_models[0], disable=['ner', 'textcat', 'parser'])
+        self.spacy_model.add_pipe('sentencizer')
         print("spacy model loaded in {:.2f} seconds".format(time() - start))
         self.language = None
         """Language of the input file."""
