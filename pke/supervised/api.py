@@ -44,7 +44,10 @@ class SupervisedLoadFile(LoadFile):
                 model (str): the path to load the model in pickle format,
                     default to None.
         """
-
+        if not model:
+            print("model is none in classify candiates")
+            model = self.semeval_model
+            print(type(model))
         # get matrix of instances
         candidates = self.instances.keys()
         X = [self.instances[u] for u in candidates]

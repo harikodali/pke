@@ -56,6 +56,8 @@ class WINGNUS(SupervisedLoadFile):
     def __init__(self, semeval_model=None):
         """Redefining initializer for WINGNUS."""
         self.semeval_model = semeval_model
+        print("at init in wingnus")
+        print(type(self.semeval_model))
         super(WINGNUS, self).__init__()
 
     def candidate_selection(self, grammar=None):
