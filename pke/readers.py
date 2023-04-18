@@ -85,6 +85,7 @@ class RawTextReader(Reader):
             # select first model for the language
             if len(installed_models):
                 start = time()
+                print("spacy model loading start")
                 nlp = spacy.load(installed_models[0], disable=['ner', 'textcat', 'parser'])
                 print("spacy model loaded in {:.2f} seconds".format(time() - start))
 

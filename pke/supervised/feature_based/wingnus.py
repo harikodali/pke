@@ -55,7 +55,7 @@ class WINGNUS(SupervisedLoadFile):
 
     def __init__(self):
         """Redefining initializer for WINGNUS."""
-
+        print("wignus init from wingnus.py")
         super(WINGNUS, self).__init__()
 
     def candidate_selection(self, grammar=None):

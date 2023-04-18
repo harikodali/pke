@@ -6,7 +6,7 @@ from __future__ import division
 from __future__ import absolute_import
 
 import os
-
+from time import time
 from pke.base import LoadFile
 from sklearn.preprocessing import MinMaxScaler
 from joblib import load as load_model
@@ -24,9 +24,10 @@ class SupervisedLoadFile(LoadFile):
         self.instances = {}
         instance = self.__class__.__name__
         model = os.path.join(self._models, instance + "-semeval2010.py3.pickle")
-        print("model loading start")
+        print("semeval model loading start")
+        start = time()
         self.clf = load_model(model)
-        print("model loading complete")
+        print("semeval model loading complete in {} seconds".format(time()-start))
         """ The instances container. """
 
     def feature_scaling(self):
