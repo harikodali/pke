@@ -102,7 +102,9 @@ class RawTextReader(Reader):
 
         # Fix for non splitting words with hyphens with spacy taken from
         # https://spacy.io/usage/linguistic-features#native-tokenizer-additions
-        nlp.tokenizer.infix_finditer = infix_re.finditer
+
+        # Below line causes memory leak, doesn't make difference in output
+        # nlp.tokenizer.infix_finditer = infix_re.finditer
 
         # process the document
         spacy_doc = nlp(text)
